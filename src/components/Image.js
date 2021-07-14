@@ -1,7 +1,7 @@
 import React from "react";
 // import Download from "./Download";
 
-const Image = ({ url, downloadUrl, title }) => {
+const Image = ({ url, title }) => {
   return (
       <li>
         <a href={url} download target="_blank" rel="noopener noreferrer">

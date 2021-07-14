@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import { fetchPage } from "../utils/dom";
-import pageParser from "../utils/parser";
+import pageParser  from "../utils/parser";
 
 export const ScraperContext = createContext();
 
@@ -15,7 +15,7 @@ const ScraperContextProvider = (props) => {
     setScraping(true);
     const { pageContent, status } = await fetchPage(pageUrl);
     if (status !== 200) { /* TOD0: Handle Errors */ }
-    const { pageTitle, images } = pageParser(pageContent);
+    const { pageTitle, images } = pageParser(pageContent, pageUrl);
     setPageTitle(pageTitle);
     setImages(images);
     return images;
