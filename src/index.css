@@ -47,6 +47,10 @@ h2 {
   color: #051c33;
 }
 
+h1 a {
+  color: #051c33;
+}
+
 h1 {
   font-family: "Lobster", "Josefin Sans", Helvetica, Arial, sans-serif;
   font-size: 4em;
@@ -82,14 +86,14 @@ a {
 .search-form button {
   outline: none;
   border: none;
-  padding: 0px 15px;
+  padding: 0px 35px;
   border-radius: 0 0.35em 0.35em 0;
   cursor: pointer;
 }
 
-.active {
-  background-color: #051c33;
+.search-form button.active {
   cursor: pointer;
+  padding: 0px 25px;
 }
 
 input {
@@ -134,16 +138,27 @@ input {
   height: 165px;
   overflow: hidden;
   margin-bottom: 15px;
+  position: relative;
+}
+
+.photo-container ul .download-icon {
+  position: absolute;
+  right: 0;
+  top: 0px;
 }
 
 .photo-container ul img {
-  width: 100%;
+  width: 90%;
   transform: scale(1.25);
   transition: transform 1.25s;
 }
 
 .photo-container li:hover img {
   transform: scale(1.65);
+}
+
+.photo-container li button {
+  cursor: pointer;
 }
 
 .photo-container .not-found {

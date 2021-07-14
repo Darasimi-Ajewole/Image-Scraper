@@ -1,24 +1,35 @@
 import React, { Component } from "react";
-import PhotoContextProvider from "./context/PhotoContext";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import ScraperContextProvider from "./context/ScraperContext";
+import { HashRouter, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import Item from "./components/Item";
-import Search from "./components/Search";
+import Results from "./components/Results";
+// import Item from "./components/Item";
+import Scraper from "./components/Scraper";
 import NotFound from "./components/NotFound";
+import Error from "./components/Error";
+import Home from "./components/Home";
 
 class App extends Component {
   // Prevent page reload, clear input, set URL and push history on submit
-  handleSubmit = (e, history, searchInput) => {
-    e.preventDefault();
-    e.currentTarget.reset();
-    let url = `/search/${searchInput}`;
+  handleSubmit = (history, searchInput) => {
+    let url = `/scrape/image?page_url={${searchInput}}`;
     history.push(url);
   };
 
+  handleError = (history, { status, message } ) => {
+    let url = `/error/${status}/${message}`;
+    history.push(url);
+  }
+
+  handleScraped = (history, pageUrl) => {
+    let url = `/display/results?page_url={${pageUrl}}`;
+    history.push(url);
+  }
+
   render() {
     return (
-      <PhotoContextProvider>
-        <HashRouter basename="/SnapScout">
+      <ScraperContextProvider>
+        <HashRouter>
           <div className="container">
             <Route
               render={props => (
@@ -29,30 +40,35 @@ class App extends Component {
               )}
             />
             <Switch>
+              <Route exact path="/" render={() => <Home />}  />
               <Route
-                exact
-                path="/"
-                render={() => <Redirect to="/mountain" />}
-              />
-
-              <Route
-                path="/mountain"
-                render={() => <Item searchTerm="mountain" />}
-              />
-              <Route path="/beach" render={() => <Item searchTerm="beach" />} />
-              <Route path="/bird" render={() => <Item searchTerm="bird" />} />
-              <Route path="/food" render={() => <Item searchTerm="food" />} />
-              <Route
-                path="/search/:searchInput"
+                path="/scrape/image/"
                 render={props => (
-                  <Search searchTerm={props.match.params.searchInput} />
+                  <Scraper
+                    urlString={props.location.search}
+                    onScraped={(pageUrl) => this.handleScraped(props.history, pageUrl)}
+                    onError={(payload) => this.handleError(props.history, payload) }
+                  />
+                )}
+              />
+              <Route
+                path="/display/results"
+                render={props => <Results urlString={props.location.search} />}
+              />
+              <Route
+                path="/error/:status/:message"
+                render={props => (
+                  <Error
+                    status={props.match.params.status}
+                    message={props.match.params.message}
+                  />
                 )}
               />
               <Route component={NotFound} />
             </Switch>
           </div>
         </HashRouter>
-      </PhotoContextProvider>
+        </ScraperContextProvider>
     );
   }
 }
