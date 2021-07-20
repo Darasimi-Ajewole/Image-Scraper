@@ -80,7 +80,7 @@ a {
 .search-form {
   max-width: 460px;
   display: flex;
-  margin: 0 auto 32px;
+  margin: 0px auto 0px;
 }
 
 .search-form button {
@@ -96,7 +96,7 @@ a {
   padding: 0px 25px;
 }
 
-input {
+form .ui.input > input {
   font-size: 1em;
   width: 100%;
   background-color: #edeff0;
@@ -105,6 +105,10 @@ input {
   border-right: none;
   border-radius: 0.35em 0 0 0.35em;
   outline: none;
+}
+
+.ui.input {
+  width: 100%;
 }
 
 .main-nav li {
