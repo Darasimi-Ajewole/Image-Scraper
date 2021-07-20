@@ -52,11 +52,11 @@ const Form = ({ handleSubmit, history }) => {
         value={searchEntry}
         label={searchEntry.trim() && <ScrapeButton wrongEntry={wrongEntry} />}
         labelPosition='right'
-        error={Boolean(wrongEntry)}
+        error={Boolean(searchEntry.trim() && wrongEntry)}
       />
     </form>
     {
-      wrongEntry && 
+      searchEntry.trim() && wrongEntry && 
       <Label basic color='red' pointing>
         { wrongEntry }
       </Label>
@@ -93,7 +93,7 @@ const ScrapeButton = ({wrongEntry}) => (
 
 
 const appendHttp = (url) => {
-  if (url.startsWith('http')) return
+  if (url.startsWith('http')) return url
   return `https://${url}`
 }
 
