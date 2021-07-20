@@ -12,5 +12,6 @@ BROWSER=none yarn start | cat - &
 echo 'Starting API server'
 cd api
 source venv/bin/activate
-python main.py &
+functions-framework --target=main --port=4000 --source="$(pwd)/main.py" --debug &
+
 wait
