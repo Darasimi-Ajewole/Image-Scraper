@@ -13,15 +13,31 @@ export const imageParser = (page, pageUrl) => {
     const parsedImages = {};
     const allAttr = new Set();
     const imageTags = page.querySelectorAll('img');
+    const ignoredAttr = new Set([
+        'srcset',
+        'alt',
+        'crossorigin',
+        'height',
+        'ismap',
+        'loading',
+        'longdesc',
+        'referrerpolicy',
+        'sizes',
+        'srcset',
+        'usemap',
+        'width',
+    ])
 
     for (const imageTag of imageTags) {
         const alt = imageTag.alt || 'Welcome to Image Scraper';
         // SRC set still dey
 
         for (const attr of imageTag.attributes) {
-            const { value } = attr
-            
-            if (value in allAttr) continue;
+            const { value, name } = attr
+
+            if (ignoredAttr.has(name)) continue;
+
+            if (allAttr.has(value)) continue;
             allAttr.add(value)
 
             let validLink = urlChecker(value);
