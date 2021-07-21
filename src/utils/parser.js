@@ -1,34 +1,38 @@
-const WINDOW_URL = 'http://localhost:3000';
+import { urlChecker } from './validate';
 
 const correctRelativeUrl = (pageUrl, imageSrc) => {
     const url = new URL(pageUrl);
     const root = url.origin;
     let src = imageSrc;
-    const relativeURL = src.startsWith(WINDOW_URL);
-    if (!relativeURL) return src;
-
-    src = src.replace(WINDOW_URL, '');
-
-    src = `${root}${src}`;
-    
-    return src
+    const relativeURL = src.startsWith('/');
+    if (!relativeURL) return src;    
+    return `${root}${src}`
 }
 
 export const imageParser = (page, pageUrl) => {
     const parsedImages = {};
+    const allAttr = new Set();
     const imageTags = page.querySelectorAll('img');
-    console.log(imageTags);
 
     for (const imageTag of imageTags) {
-        let src = correctRelativeUrl(pageUrl, imageTag.src);
-        if (src in parsedImages) continue;
+        const alt = imageTag.alt || 'Welcome to Image Scraper';
+        // SRC set still dey
 
-        const image = {
-            src: src,
-            alt: imageTag.alt,
-            // downloadUrl: await generateDownloadUrl(imageTag.src),
-        };
-        parsedImages[src] = image;
+        for (const attr of imageTag.attributes) {
+            const { value } = attr
+            
+            if (value in allAttr) continue;
+            allAttr.add(value)
+
+            let validLink = urlChecker(value);
+            validLink = validLink || value.startsWith('/')
+            if (!validLink) continue
+    
+            let src = correctRelativeUrl(pageUrl, value);
+            // downloadUrl: await generateDownloadUrl(src),
+            const image = { src, alt };
+            parsedImages[src] = image;    
+        }
     }
 
     return Object.values(parsedImages);

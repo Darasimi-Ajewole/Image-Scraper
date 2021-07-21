@@ -20,7 +20,9 @@ def get_page_content(request):
     page_url = request.args.get('page_url')
     try:
         response = get(page_url, timeout=15)
-        return response.content, response.status_code
+        if response.ok:
+            return response.content, response.status_code
+        return response.reason, response.status_code
 
     except SSLError:
         return 'SSL error encountered on scraping url', 400

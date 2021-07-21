@@ -8,8 +8,9 @@ const Scraper = ({ urlString, onScraped, onError }) => {
   useEffect(() => {
     async function callBack () {
       const pageUrl = extractPageUrl(urlString);
-      const success = await runScrape(pageUrl);
+      const {success, status, errorMessage } = await runScrape(pageUrl);
       if (success) onScraped(pageUrl)
+      else onError(errorMessage, status)
     };
     callBack()
     // eslint-disable-next-line

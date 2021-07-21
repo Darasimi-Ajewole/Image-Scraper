@@ -6,28 +6,29 @@ export const ScraperContext = createContext();
 
 const ScraperContextProvider = (props) => {
   const [images, setImages] = useState([]);
-  const [scraping, setScraping] = useState(false);
   const [pageUrl, setPageUrl] = useState('');
   const [pageTitle, setPageTitle] = useState(null);
 
   const runScrape = async (pageUrl) => {
     setPageUrl(pageUrl)
-    setScraping(true);
     const { pageContent, status } = await fetchPage(pageUrl);
-    if (status !== 200) { /* TOD0: Handle Errors */ }
+    const success = String(status).startsWith('2')
+
+    if (!success) {
+      return { success: false, status, errorMessage: pageContent}
+    }
     const { pageTitle, images } = pageParser(pageContent, pageUrl);
     setPageTitle(pageTitle);
     setImages(images);
-    return images;
+    return { success };
   };
 
   const globalContext = {
     images,
-    scraping,
     pageUrl,
     pageTitle,
-
     runScrape,
+
   }
   return (
     <ScraperContext.Provider value={globalContext}>

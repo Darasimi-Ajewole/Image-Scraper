@@ -16,8 +16,9 @@ class App extends Component {
     history.push(url);
   };
 
-  handleError = (history, { status, message } ) => {
-    let url = `/error/${status}/${message}`;
+  handleError = (history, { status, errorMessage } ) => {
+
+    let url = `/error/${status}/${encodeURI(errorMessage)}`;
     history.push(url);
   }
 
@@ -47,7 +48,7 @@ class App extends Component {
                   <Scraper
                     urlString={props.location.search}
                     onScraped={(pageUrl) => this.handleScraped(props.history, pageUrl)}
-                    onError={(payload) => this.handleError(props.history, payload) }
+                    onError={(errorMessage, status) => this.handleError(props.history, { errorMessage, status }) }
                   />
                 )}
               />
