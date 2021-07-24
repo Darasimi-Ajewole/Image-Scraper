@@ -30,7 +30,6 @@ export const imageParser = (page, pageUrl) => {
 
     for (const imageTag of imageTags) {
         const alt = imageTag.alt || 'Welcome to Image Scraper';
-        // SRC set still dey
 
         for (const attr of imageTag.attributes) {
             const { value, name } = attr

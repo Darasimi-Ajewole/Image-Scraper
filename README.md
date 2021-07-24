@@ -24,6 +24,11 @@ Click the demo link or clone/download the repository on your local machine.
 
 `./scripts/dev.sh`
 
+##### Run Tests.
+
+`yarn tests`
+
+
 ### Built With
 
 - React js
@@ -40,10 +45,6 @@ Click the demo link or clone/download the repository on your local machine.
 **2. Scrape lazy loaded Images.**
 
 **3. Scrape Images with relative urls.**
-
-### Coming Soon
-
-- [ ] Unittest Tests
 
 ### Contributing
 
