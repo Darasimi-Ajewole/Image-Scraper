@@ -10,7 +10,7 @@ Image scraper is a SAAS tool for scraping images off any webpage. The tool was b
 
 ### Motivation
 
-The purpose of this project was to get familiar with React Hooks and Context API.
+The purpose of this project was to get familiar with React Hooks and Context API by building a scraping tool.
 
 ### Getting Started
 
