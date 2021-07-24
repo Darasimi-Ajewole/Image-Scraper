@@ -21,7 +21,7 @@ const Form = ({ handleSubmit, history }) => {
     return correctInput
   }
 
-  const debounceCallbacks = useMemo(() => debounce(validateUrl, 500), []);
+  const debounceCallbacks = useMemo(() => debounce(validateUrl, 100), []);
 
   // update search text state
   const onSearchChange = e =>  {

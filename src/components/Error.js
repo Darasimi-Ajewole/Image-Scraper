@@ -2,7 +2,8 @@ import React from "react";
 
 const Error = ({status, message}) => (
   <div className="not-found">
-    <h2>{ (message && decodeURI(message)) }</h2>
+    <h2>Oops, Something went wrong</h2>
+    <p>{ (message && decodeURI(message)) }</p>
   </div>
 );
 
