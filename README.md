@@ -28,7 +28,6 @@ Click the demo link or clone/download the repository on your local machine.
 
 `yarn tests`
 
-
 ### Built With
 
 - React js
