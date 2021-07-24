@@ -1,3 +1,4 @@
+import logging
 from requests import get
 from requests.exceptions import (SSLError, Timeout, ConnectTimeout,
                                  ReadTimeout, ConnectionError,
@@ -5,14 +6,13 @@ from requests.exceptions import (SSLError, Timeout, ConnectTimeout,
                                  TooManyRedirects, MissingSchema,
                                  InvalidSchema, InvalidURL, URLRequired)
 from flask import make_response
-
-import logging
+from settings import SPA_ORIGIN
 
 
 def main(request):
+
     resp = make_response(get_page_content(request))
-    # TODO: Change this to only valid urls
-    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Origin'] = SPA_ORIGIN
     return resp
 
 
