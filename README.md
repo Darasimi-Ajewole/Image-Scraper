@@ -6,7 +6,7 @@
 
 ### Summary
 
-Image scraper is a SAAS tool for scraping images off any webpage. The tool was built using React, React Hooks, and React Router Context API. The image scraping logic was created using a python web service built with [Flask](https://flask.palletsprojects.com/en/2.0.x/) for scraping web page contents and [DOMParser]([https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) to extract images from web page content. Styling of the search bar and error messaging were created with [Semantic UI-React](https://react.semantic-ui.com/).
+Image scraper is a SAAS tool for scraping images off any webpage. The tool was built using ReactJS, [Flask](https://flask.palletsprojects.com/en/2.0.x/) for scraping web page contents and [DOMParser]([https://developer.mozilla.org/en-US/docs/Web/API/DOMParser) to extract images from web page content. Styling of the search bar and error messaging were created with [Semantic UI-React](https://react.semantic-ui.com/).
 
 ### Motivation
 
