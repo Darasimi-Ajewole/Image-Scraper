@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import debounce from 'lodash.debounce';
 import { urlChecker } from '../utils/validate';
-import { Input, Icon, Label } from 'semantic-ui-react';
+import { Input, Label } from 'semantic-ui-react';
 import 'semantic-ui-css/components/input.min.css';
 import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/icon.min.css';
@@ -11,7 +11,7 @@ import 'semantic-ui-css/components/label.min.css';
 
 const Form = ({ handleSubmit, history }) => {
   const [searchEntry, setSearchEntry] = useState("");
-  const [wrongEntry, setWrongEntry] = useState(null); 
+  const [wrongEntry, setWrongEntry] = useState(true); 
 
   const validateUrl = url => {
     const correctInput = urlChecker(url);
@@ -50,7 +50,7 @@ const Form = ({ handleSubmit, history }) => {
         placeholder="Enter URL"
         onChange={onSearchChange}
         value={searchEntry}
-        label={searchEntry.trim() && <ScrapeButton wrongEntry={wrongEntry} />}
+        label={<ScrapeButton wrongEntry={wrongEntry} />}
         labelPosition='right'
         error={Boolean(searchEntry.trim() && wrongEntry)}
       />
@@ -72,7 +72,7 @@ const ScrapeButton = ({wrongEntry}) => (
     className="active"
     disabled={wrongEntry}
   >
-  { !wrongEntry &&
+  {
     <svg x="0px" y="0px" viewBox="0 0 297 297" height="32pt" width="32pt">
       <g>
         <g id="XMLID_29_">
@@ -86,7 +86,6 @@ const ScrapeButton = ({wrongEntry}) => (
       </g>
     </svg>
   }
-  { wrongEntry && <Icon inverted color='red' name='ban' size='large' />}
   </button>
 
 );
