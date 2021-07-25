@@ -1,6 +1,6 @@
 export REACT_APP_CONTENT_ENDPOINT=https://us-central1-open-source-320820.cloudfunctions.net/image-scraper/get_page_content
 
-# yarn build && yarn deploy &
+yarn build && yarn deploy &
 
 cd api
 gcloud functions deploy image-scraper \
