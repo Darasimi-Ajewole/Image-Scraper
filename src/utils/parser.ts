@@ -1,16 +1,25 @@
 import { urlChecker } from './validate';
 
-const correctRelativeUrl = (pageUrl, imageSrc) => {
-    const url = new URL(pageUrl);
-    const root = url.origin;
+export interface Image {
+    src: string,
+    alt: string
+}
+
+interface ParsedImages {
+    [key: string]: Image
+}
+
+const correctRelativeUrl = (pageUrl: string, imageSrc: string): string => {
+    const url: URL = new URL(pageUrl);
+    const root: string = url.origin;
     let src = imageSrc;
-    const relativeURL = src.startsWith('/');
+    const relativeURL: boolean = src.startsWith('/');
     if (!relativeURL) return src;    
     return `${root}${src}`
 }
 
-export const imageParser = (page, pageUrl) => {
-    const parsedImages = {};
+export const imageParser = (page: Document, pageUrl: string): Image[] => {
+    const parsedImages: ParsedImages = {};
     const allAttr = new Set();
     const imageTags = page.querySelectorAll('img');
     const ignoredAttr = new Set([
@@ -29,7 +38,7 @@ export const imageParser = (page, pageUrl) => {
     ])
 
     for (const imageTag of imageTags) {
-        const alt = imageTag.alt || 'Welcome to Image Scraper';
+        const alt: string = imageTag.alt || 'Welcome to Image Scraper';
 
         for (const attr of imageTag.attributes) {
             const { value, name } = attr
@@ -39,13 +48,13 @@ export const imageParser = (page, pageUrl) => {
             if (allAttr.has(value)) continue;
             allAttr.add(value)
 
-            let validLink = urlChecker(value);
+            let validLink: boolean = urlChecker(value);
             validLink = validLink || value.startsWith('/')
             if (!validLink) continue
     
-            let src = correctRelativeUrl(pageUrl, value);
+            let src: string = correctRelativeUrl(pageUrl, value);
             // downloadUrl: await generateDownloadUrl(src),
-            const image = { src, alt };
+            const image: Image = { src, alt };
             parsedImages[src] = image;    
         }
     }
@@ -53,11 +62,11 @@ export const imageParser = (page, pageUrl) => {
     return Object.values(parsedImages);
 }
 
-const pageParser = (pageContent, pageUrl) => {
+const pageParser = (pageContent: string, pageUrl: string): {pageTitle: string, images: Image[] } => {
     const parser = new DOMParser();
-    const page = parser.parseFromString(pageContent, "text/html");
-    const pageTitle = page.querySelector('title').textContent;
-    const images = imageParser(page, pageUrl);
+    const page: Document = parser.parseFromString(pageContent, "text/html");
+    const pageTitle: string = page.querySelector('title').textContent;
+    const images: Image[] = imageParser(page, pageUrl);
     return { pageTitle, images }
 }
 

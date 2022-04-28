@@ -1,8 +1,9 @@
 import axios from "axios";
+import { AxiosResponse } from "axios";
 
-export const fetchPage = async (query) => {
-    const url = `${process.env.REACT_APP_CONTENT_ENDPOINT}?page_url=${query}`
-    let data, status, response
+export const fetchPage = async (query: string): Promise<{pageContent: string, status: number}> => {
+    const url: string = `${process.env.REACT_APP_CONTENT_ENDPOINT}?page_url=${query}`
+    let data: string, status: number, response: AxiosResponse
     try {
         response = await axios.get(url);
     } catch (error) {
@@ -20,8 +21,8 @@ export const fetchPage = async (query) => {
 }
 
 
-export const extractPageUrl = (urlString) => {
-    const regExp = /\{([^)]+)\}/;
+export const extractPageUrl = (urlString: string): string => {
+    const regExp: RegExp = /\{([^)]+)\}/;
     const match = regExp.exec(urlString);
 
     return match[1]

@@ -1,4 +1,4 @@
-import pageParser from '../utils/parser';
+import pageParser, { Image } from '../utils/parser';
 
 
 describe('Testing Utils', () => {
@@ -9,8 +9,8 @@ describe('Testing Utils', () => {
 	});
     
 	it('checks image links are all extracted', () => {
-		const { images } = pageParser(pageContent, 'http://localhost:8080');
-		const expected = [
+		const { images } : { images: Image[] } = pageParser(pageContent, 'http://localhost:8080');
+		const expected: Image[] = [
 			{
 			  src: 'https://www.facebook.com/tr?id=616289371798400&ev=PageView&noscript=1',
 			  alt: 'Welcome to Image Scraper'
@@ -225,7 +225,7 @@ describe('Testing Utils', () => {
 })
 
 
-const pageContent = `
+const pageContent: string = `
 <!DOCTYPE html>
 <html lang=en> <head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content=IE=edge><meta name=viewport content="width=device-width, initial-scale=1"><meta name=referrer content=same-origin><meta name=keywords content="online form builder with database, create forms, create online registration form database, web forms software, online forms with electronic signature free,online form builder with database, form, formplus, form builder, online forms, survey, secure forms, mobile friendly, offline forms, save to cloud, mobile forms, form generator, registration forms, unlimited file uploads, application forms, form software, nsw-q-xji9hcnh9p-6w7qepqgu1yz0yj7buvdsd2grk-qpg9l0j9qps99533q9s0lq6ew7qophbiduyl6ntgv3hd2vhd4589x895n7t115b2kg7q7-mb3c6kjk2b9u3wxndz"><meta name=description content="Join over 500k people who have trusted us to create online forms & surveys for all their data collection needs."><meta name=author content><meta name=pocket-site-verification content=1d44f32044ed4be1900758a5a8ecc9><link rel=icon href=/static/images/favicon.ico type=image/ico><link rel=preconnect href=https://fonts.gstatic.com/ crossorigin ><link rel=preconnect href=https://fonts.googleapis.com/ crossorigin ><link rel=stylesheet href=https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css integrity=sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ= crossorigin=anonymous><link rel=preload as=font type=font/woff2 href=/static/fonts/quicksand-v9-latin-regular.woff2 crossorigin><link rel=preload as=font type=font/woff2 href=/static/fonts/open-sans-v16-latin-regular.woff2 crossorigin><link rel=canonical href=https://www.formpl.us><meta property=og:title content="Create Free Online Forms & Surveys in 2 Mins"><meta property=og:description content="Join over 500k people who have trusted us to create online forms & surveys for all their data
 collection needs."><meta property=og:image content=https://storage.googleapis.com/fplsblog/home-image.png><meta property=og:url content=https://www.formpl.us><meta name=twitter:card content=summary_large_image><!-- Nav Critical CSS for external pages --><style>
