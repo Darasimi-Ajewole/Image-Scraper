@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { ScraperContext, ScrapeResult } from "../context/ScraperContext";
+import { ScraperContext, ScrapeResult, ScraperContextInterface } from "../context/ScraperContext";
 import Loader from "./Loader";
 import { extractPageUrl } from "../utils/dom";
 
@@ -10,13 +10,15 @@ type ScraperProps = {
 }
 
 const Scraper = ({ urlString, onScraped, onError }: ScraperProps): JSX.Element => {
-  const { runScrape } = useContext(ScraperContext);
+  const globalContext = useContext<ScraperContextInterface | null>(ScraperContext);
+  const runScrape = globalContext?.runScrape as (pageUrl: string) => Promise<ScrapeResult>
+
   useEffect(() => {
     async function callBack () {
       const pageUrl: string = extractPageUrl(urlString);
       const {success, status, errorMessage }: ScrapeResult = await runScrape(pageUrl);
       if (success) onScraped(pageUrl)
-      else onError(errorMessage, status)
+      else onError(String(errorMessage), Number(status))
     };
     callBack()
     // eslint-disable-next-line

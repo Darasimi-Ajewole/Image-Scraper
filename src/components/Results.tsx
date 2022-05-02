@@ -13,7 +13,9 @@ type ResultsProp = {
 
 const Results = ({ urlString }: ResultsProp): JSX.Element => {
 
-  const { pageTitle, images }: ScraperContextInterface = useContext(ScraperContext);
+  const globalContext = useContext(ScraperContext) as ScraperContextInterface;
+  const { pageTitle, images } : ScraperContextInterface = globalContext
+
   let history: History = useHistory();
 
   if (!pageTitle && urlString) {

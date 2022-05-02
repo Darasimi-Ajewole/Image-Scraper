@@ -12,9 +12,6 @@ import NotFound from "./components/NotFound";
 import Error from "./components/Error";
 import Home from "./components/Home";
 
-import { ScrapeResult } from "./context/ScraperContext";
-
-
 type ErrorParams = {
   status?: string,
   message?: string
@@ -27,7 +24,7 @@ class App extends Component {
     history.push(url);
   };
 
-  handleError = (history: History, { status, errorMessage }: ScrapeResult ) => {
+  handleError = (history: History, { status, errorMessage }: { status: number, errorMessage: string } ) => {
 
     let url = `/error/${status}/${encodeURI(errorMessage)}`;
     history.push(url);

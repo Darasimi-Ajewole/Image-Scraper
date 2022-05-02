@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 interface ErrorProps {
-  status: string,
-  message: string
+  status?: string,
+  message?: string
 }
 
 const Error = ({status, message}: ErrorProps) => (

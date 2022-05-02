@@ -22,7 +22,7 @@ const Form = ({ handleSubmit, history }: FormProps) => {
 
   const validateUrl = (url: string): boolean => {
     const correctInput = urlChecker(url);
-    const errMsg = correctInput ? null: 'Enter a valid url';
+    const errMsg = correctInput ? '': 'Enter a valid url';
     
     setWrongEntry(errMsg);
     return correctInput
