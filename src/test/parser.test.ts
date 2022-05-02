@@ -10,15 +10,8 @@ describe('Testing Utils', () => {
     
 	it('checks image links are all extracted', () => {
 		const { images } : { images: Image[] } = pageParser(pageContent, 'http://localhost:8080');
+
 		const expected: Image[] = [
-			{
-			  src: 'https://www.facebook.com/tr?id=616289371798400&ev=PageView&noscript=1',
-			  alt: 'Welcome to Image Scraper'
-			},
-			{
-			  src: 'https://q.quora.com/_/ad/24ed1a304a304af6a16f44327da4d6c9/pixel?tag=ViewContent&noscript=1',
-			  alt: 'Welcome to Image Scraper'
-			},
 			{
 			  src: 'http://localhost:8080/static/images/logo/formplus-logo.png',
 			  alt: 'FormPlus Logo'

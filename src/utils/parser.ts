@@ -39,7 +39,6 @@ export const imageParser = (page: Document, pageUrl: string): Image[] => {
 
     for (const imageTag of imageTags) {
         const alt: string = imageTag.alt || 'Welcome to Image Scraper';
-
         for (const attr of imageTag.attributes) {
             const { value, name } = attr
 
@@ -65,7 +64,8 @@ export const imageParser = (page: Document, pageUrl: string): Image[] => {
 const pageParser = (pageContent: string, pageUrl: string): {pageTitle: string, images: Image[] } => {
     const parser = new DOMParser();
     const page: Document = parser.parseFromString(pageContent, "text/html");
-    const pageTitle: string = page.querySelector('title').textContent;
+    const pageTitleElement = page.querySelector('title');
+    const pageTitle = pageTitleElement?.textContent as string;
     const images: Image[] = imageParser(page, pageUrl);
     return { pageTitle, images }
 }
