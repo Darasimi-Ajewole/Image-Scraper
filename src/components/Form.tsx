@@ -7,13 +7,20 @@ import 'semantic-ui-css/components/form.min.css';
 import 'semantic-ui-css/components/icon.min.css';
 import 'semantic-ui-css/components/button.min.css';
 import 'semantic-ui-css/components/label.min.css';
+import { History } from 'history';
 
 
-const Form = ({ handleSubmit, history }) => {
+type FormProps = {
+  handleSubmit: (history: History, url: string) => void,
+  history: History
+}
+
+
+const Form = ({ handleSubmit, history }: FormProps) => {
   const [searchEntry, setSearchEntry] = useState("");
-  const [wrongEntry, setWrongEntry] = useState(true); 
+  const [wrongEntry, setWrongEntry] = useState(""); 
 
-  const validateUrl = url => {
+  const validateUrl = (url: string): boolean => {
     const correctInput = urlChecker(url);
     const errMsg = correctInput ? null: 'Enter a valid url';
     
@@ -24,16 +31,16 @@ const Form = ({ handleSubmit, history }) => {
   const debounceCallbacks = useMemo(() => debounce(validateUrl, 100), []);
 
   // update search text state
-  const onSearchChange = e =>  {
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>  {
     setSearchEntry(e.target.value);
     debounceCallbacks(e.target.value);
   }
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.SyntheticEvent) => {
     if (!validateUrl(searchEntry)) return null
   
     e.preventDefault();
-    let url = appendHttp(searchEntry)
+    let url: string = appendHttp(searchEntry)
     setSearchEntry(url);
     handleSubmit(history, url)
   }
@@ -50,7 +57,7 @@ const Form = ({ handleSubmit, history }) => {
         placeholder="Enter URL"
         onChange={onSearchChange}
         value={searchEntry}
-        label={<ScrapeButton wrongEntry={wrongEntry} />}
+        label={<ScrapeButton disabled={Boolean(wrongEntry) || !(searchEntry.trim())} />}
         labelPosition='right'
         error={Boolean(searchEntry.trim() && wrongEntry)}
       />
@@ -66,11 +73,11 @@ const Form = ({ handleSubmit, history }) => {
 };
 
 
-const ScrapeButton = ({wrongEntry}) => (
+const ScrapeButton = ({ disabled }: { disabled: boolean }) => (
   <button
     type="submit"
     className="active"
-    disabled={wrongEntry}
+    disabled={disabled}
   >
   {
     <svg x="0px" y="0px" viewBox="0 0 297 297" height="32pt" width="32pt">
@@ -91,7 +98,7 @@ const ScrapeButton = ({wrongEntry}) => (
 );
 
 
-const appendHttp = (url) => {
+const appendHttp = (url: string): string => {
   if (url.startsWith('http')) return url
   return `https://${url}`
 }

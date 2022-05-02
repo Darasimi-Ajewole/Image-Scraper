@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ScraperContextProvider from "./context/ScraperContext";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import {Route, Switch, RouteComponentProps } from "react-router";
+import { HashRouter } from "react-router-dom";
+import { History } from 'history';
+
 import Header from "./components/Header";
 import Results from "./components/Results";
 // import Item from "./components/Item";
@@ -9,20 +12,28 @@ import NotFound from "./components/NotFound";
 import Error from "./components/Error";
 import Home from "./components/Home";
 
+import { ScrapeResult } from "./context/ScraperContext";
+
+
+type ErrorParams = {
+  status?: string,
+  message?: string
+}
+
 class App extends Component {
   // Prevent page reload, clear input, set URL and push history on submit
-  handleSubmit = (history, searchInput) => {
+  handleSubmit = (history: History, searchInput: string) => {
     let url = `/scrape/image?page_url={${searchInput}}`;
     history.push(url);
   };
 
-  handleError = (history, { status, errorMessage } ) => {
+  handleError = (history: History, { status, errorMessage }: ScrapeResult ) => {
 
     let url = `/error/${status}/${encodeURI(errorMessage)}`;
     history.push(url);
   }
 
-  handleScraped = (history, pageUrl) => {
+  handleScraped = (history: History, pageUrl: string) => {
     let url = `/display/results?page_url={${pageUrl}}`;
     history.push(url);
   }
@@ -33,7 +44,7 @@ class App extends Component {
         <HashRouter>
           <div className="container">
             <Route
-              render={props => (
+              render={(props: RouteComponentProps) => (
                 <Header
                   handleSubmit={this.handleSubmit}
                   history={props.history}
@@ -44,10 +55,10 @@ class App extends Component {
               <Route exact path="/" render={() => <Home />}  />
               <Route
                 path="/scrape/image/"
-                render={props => (
+                render={(props: RouteComponentProps) => (
                   <Scraper
                     urlString={props.location.search}
-                    onScraped={(pageUrl) => this.handleScraped(props.history, pageUrl)}
+                    onScraped={(pageUrl: string) => this.handleScraped(props.history, pageUrl)}
                     onError={(errorMessage, status) => this.handleError(props.history, { errorMessage, status }) }
                   />
                 )}
@@ -58,10 +69,10 @@ class App extends Component {
               />
               <Route
                 path="/error/:status/:message"
-                render={props => (
+                render={( { match }: RouteComponentProps<ErrorParams>) => (
                   <Error
-                    status={props.match.params.status}
-                    message={props.match.params.message}
+                    status={match.params.status}
+                    message={match.params.message}
                   />
                 )}
               />

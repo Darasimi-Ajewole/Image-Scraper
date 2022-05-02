@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoImages = () => (
+const NoImages = (): JSX.Element => (
   <div>
     <h2>No Images Found</h2>
     <p>Please try a different URL</p>

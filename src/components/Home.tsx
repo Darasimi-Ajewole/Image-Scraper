@@ -13,7 +13,7 @@ const Home = () => {
 	return  <HomeContent />
 }
 
-const HomeContent = () => (
+const HomeContent = (): JSX.Element => (
 	<div>
 		<h2>Welcome to Image Scraper, A free tool to scrape images of a web page</h2>
 		<p>To get started, provide url of any web page containing images in the input box above</p>

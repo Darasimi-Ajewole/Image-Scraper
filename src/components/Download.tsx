@@ -1,6 +1,6 @@
 import React from "react";
 
-const Download = () => (
+const Download  = (): JSX.Element => (
 	<span className="download-icon" >
 		<button>
 		<svg xmlns="http://www.w3.org/2000/svg" id="bold" height="18pt" width="18pt">
